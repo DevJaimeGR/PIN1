@@ -11,6 +11,7 @@ pipeline{
             steps{
                 sh '''
                 VERSION=$(jq --raw-output .version package.json)
+                ls -la
                 docker build -t $IMAGE_NAME:$(cat version.txt) .
                 ''' 
             }
