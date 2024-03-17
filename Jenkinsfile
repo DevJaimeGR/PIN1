@@ -18,19 +18,19 @@ pipeline{
         }
         stage('docker build'){
             steps{
-                sh '''
+                sh """
                 docker build -t $IMAGE_NAME:$VERSION .
-                ''' 
+                """ 
             }
         }
         stage('Deploy to Docker'){
 
             steps{
-                sh '''
+                sh """
                 docker login --username=$DOCKER_CRED_USR --password=$DOCKER_CRED_PSW
                 docker tag $IMAGE_NAME:$VERSION $REGISTRY/$IMAGE_NAME:$VERSION
                 docker push $REGISTRY/$IMAGE_NAME:$VERSION
-                '''
+                """
             }
         }
     }
