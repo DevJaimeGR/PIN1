@@ -2,15 +2,9 @@
 pipeline{
     agent any
     stages{
-        stage('obtain repository of github'){
-            steps{
-                sh 'rm -rf PIN1'
-                sh 'git clone https://github.com/DevJaimeGR/PIN1.git'
-            }
-        }
         stage('docker build'){
             steps{
-                sh 'cd PIN1 && docker build -t node-pin1:v1 .'
+                sh 'docker build -t node-pin1:v1 .'
             }
         }
         stage('Deploy to Docker'){
