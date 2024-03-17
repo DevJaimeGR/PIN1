@@ -5,14 +5,20 @@ pipeline{
         DOCKER_CRED = credentials('PersonalDockerHub')
         REGISTRY = 'devbackend1997'
         IMAGE_NAME = 'node-pin1'
+        VERSION = ''
         }
     stages{
+        stage('Extract Version from package.json') {
+            steps {
+                script {
+                    VERSION = sh(script: 'jq --raw-output .version package.json', returnStdout: true).trim()
+                }
+            }
+        }
         stage('docker build'){
             steps{
                 sh '''
-                VERSION=$(jq --raw-output .version package.json)
-                ls -la
-                docker build -t $IMAGE_NAME:$(cat version.txt) .
+                docker build -t $IMAGE_NAME:$VERSION .
                 ''' 
             }
         }
@@ -21,8 +27,8 @@ pipeline{
             steps{
                 sh '''
                 docker login --username=$DOCKER_CRED_USR --password=$DOCKER_CRED_PSW
-                docker tag $IMAGE_NAME:(cat version.txt) $REGISTRY/$IMAGE_NAME:(cat version.txt)
-                docker push $REGISTRY/$IMAGE_NAME:(cat version.txt)
+                docker tag $IMAGE_NAME:$VERSION $REGISTRY/$IMAGE_NAME:$VERSION
+                docker push $REGISTRY/$IMAGE_NAME:$VERSION
                 '''
             }
         }
