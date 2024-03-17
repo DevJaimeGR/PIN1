@@ -13,7 +13,7 @@ pipeline{
                 script {
                     VERSION = sh(script: "jq -r '.version' package.json", returnStdout: true).trim()
                 }
-                sh 'echo la version es: $VERSION'
+                sh "echo la version es: $VERSION"
             }
         }
         stage('docker build'){
