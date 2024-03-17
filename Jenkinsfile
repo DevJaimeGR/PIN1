@@ -10,7 +10,7 @@ pipeline{
         stage('docker build'){
             steps{
                 sh '''
-                VERSION=$(jq --rw-output .version package.json)
+                VERSION=$(jq --raw-output .version package.json)
                 docker build -t $IMAGE_NAME:$(cat version.txt) .
                 ''' 
             }
