@@ -22,9 +22,6 @@ pipeline {
                     docker.build("$IMAGE_NAME:$VERSION")
                 }
             }
-            when {
-                branch 'master' // Ejecuta esta etapa solo para la rama 'master'
-            }
         }
         
         stage('Deploy to Docker') {
@@ -40,10 +37,6 @@ pipeline {
                         }
                     }
                 }
-            }
-            when {
-                // Ejecuta esta etapa solo si la etapa 'docker build' fue exitosa
-                expression { currentBuild.result == 'SUCCESS' }
             }
         }
     }
