@@ -11,7 +11,7 @@ pipeline{
         stage('Extract Version from package.json') {
             steps {
                 script {
-                    VERSION = sh(script: 'jq --raw-output .version package.json', returnStdout: true).trim()
+                    VERSION = h(script: "jq -r '.version' package.json", returnStdout: true).trim()
                 }
                 sh 'echo $VERSION'
             }
