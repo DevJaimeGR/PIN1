@@ -13,6 +13,7 @@ pipeline{
                 script {
                     VERSION = sh(script: 'jq --raw-output .version package.json', returnStdout: true).trim()
                 }
+                sh 'echo $VERSION'
             }
         }
         stage('docker build'){
