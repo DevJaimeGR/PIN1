@@ -1,3 +1,5 @@
+def functionsLib = load 'functionsslib.groovy'
+
 pipeline {
     agent any
     
@@ -32,8 +34,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'PersonalDockerHub', usernameVariable: 'DOCKER_CRED_USR', passwordVariable: 'DOCKER_CRED_PSW')]) {
                     script {
-                        docker.withRegistry(REGISTRY, DOCKER_CRED_USR, DOCKER_CRED_PSW) {
-                            docker.image("$IMAGE_NAME:$VERSION").push()
+                        functionsLib.pushDockerImage(DOCKER_CRED_USR,DOCKER_CRED_PSW,IMAGE_NAME,VERSION,REGISTRY)
                         }
                     }
                 }
