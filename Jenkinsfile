@@ -4,10 +4,6 @@ def functionslib = jenkinsLibs()
 
 pipeline {
     agent any
-
-    options {
-        timeout(time: 2, unit: 'MINUTES')
-    }
     
     environment {
         IMAGE_NAME = 'node-pin1'
@@ -27,9 +23,9 @@ pipeline {
         stage('docker build') {
             steps {
                 script {
-                    functionslib.buildImage(IMAGE_NAME,VERSION)
-                    }
+                    functionslib.buildImage(IMAGE_NAME, VERSION)
                 }
+            }
         }
 
         stage('Deploy to Docker') {
@@ -40,11 +36,10 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'PersonalDockerHub', usernameVariable: 'DOCKER_CRED_USR', passwordVariable: 'DOCKER_CRED_PSW')]) {
                     script {
-                        functionslib.pushDockerImage(DOCKER_CRED_USR,DOCKER_CRED_PSW,IMAGE_NAME,VERSION,REGISTRY)
+                        functionslib.pushDockerImage(DOCKER_CRED_USR, DOCKER_CRED_PSW, IMAGE_NAME, VERSION, REGISTRY)
                     }
                 }
             }
         }
     }
 }
-
