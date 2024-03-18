@@ -1,6 +1,6 @@
 @Library('jenkinsLibs') _
 
-def functionslib = jenkinsLibs()
+def functionslib = functionsLib()
 
 pipeline {
     agent any
