@@ -24,9 +24,8 @@ pipeline {
                     functionsLib.buildImage(IMAGE_NAME,VERSION)
                     }
                 }
-            }
         }
-        
+
         stage('Deploy to Docker') {
             environment {
                 DOCKER_CRED = credentials('PersonalDockerHub')
@@ -36,10 +35,10 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'PersonalDockerHub', usernameVariable: 'DOCKER_CRED_USR', passwordVariable: 'DOCKER_CRED_PSW')]) {
                     script {
                         functionsLib.pushDockerImage(DOCKER_CRED_USR,DOCKER_CRED_PSW,IMAGE_NAME,VERSION,REGISTRY)
-                        }
                     }
                 }
             }
+        }
     }
 }
 
