@@ -1,4 +1,4 @@
-def functionsLib = load 'functionslib.groovy'
+@Library('jenkinsLibs') _
 
 pipeline {
     agent any
@@ -21,7 +21,7 @@ pipeline {
         stage('docker build') {
             steps {
                 script {
-                    functionsLib.buildImage(IMAGE_NAME,VERSION)
+                    functionslib.buildImage(IMAGE_NAME,VERSION)
                     }
                 }
         }
@@ -34,7 +34,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'PersonalDockerHub', usernameVariable: 'DOCKER_CRED_USR', passwordVariable: 'DOCKER_CRED_PSW')]) {
                     script {
-                        functionsLib.pushDockerImage(DOCKER_CRED_USR,DOCKER_CRED_PSW,IMAGE_NAME,VERSION,REGISTRY)
+                        functionslib.pushDockerImage(DOCKER_CRED_USR,DOCKER_CRED_PSW,IMAGE_NAME,VERSION,REGISTRY)
                     }
                 }
             }
