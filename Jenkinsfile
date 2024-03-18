@@ -21,7 +21,9 @@ pipeline {
         stage('docker build') {
             steps {
                 script {
-                    docker.build("$IMAGE_NAME:$VERSION")
+                    dir('.'){
+                        docker.build("$IMAGE_NAME:$VERSION")
+                    }
                 }
             }
         }
