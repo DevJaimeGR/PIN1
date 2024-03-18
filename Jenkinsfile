@@ -4,6 +4,10 @@ def functionslib = jenkinsLibs()
 
 pipeline {
     agent any
+
+    options {
+        timeout(time: 2, unit: 'MINUTES')
+    }
     
     environment {
         IMAGE_NAME = 'node-pin1'
