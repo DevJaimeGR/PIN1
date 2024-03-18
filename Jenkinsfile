@@ -1,4 +1,4 @@
-def functionsLib = load 'functionsslib.groovy'
+def functionsLib = load 'functionslib.groovy'
 
 pipeline {
     agent any
